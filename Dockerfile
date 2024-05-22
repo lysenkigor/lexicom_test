@@ -13,4 +13,4 @@ COPY poetry.lock pyproject.toml ./
 RUN poetry config virtualenvs.create false \
   && poetry install --no-root
 COPY . .
-ENTRYPOINT gunicorn -w 4 -k uvicorn.workers.UvicornWorker --bind unix:/tmp/fastapi.sock src.entrypoint:app
+ENTRYPOINT uvicorn src.entrypoint:app --host 0.0.0.0 --port 8000
