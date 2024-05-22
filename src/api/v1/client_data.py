@@ -10,7 +10,6 @@ from src.http_status_description.description import HTTPResponseDescription as H
 from src.models.client_data import ClientData, validate_phone
 
 router = APIRouter(
-    prefix='/user',
     tags=['user']
 )
 
@@ -44,7 +43,7 @@ async def update_client_address(
     await cache_repo.put(key=client_data.phone, value=client_data.address)
 
 
-@router.get('check_data', responses={HTTPStatus.NOT_FOUND: {'description': HTTPDesc.NON_EXISTENT_NUMBER}})
+@router.get('/check_data', responses={HTTPStatus.NOT_FOUND: {'description': HTTPDesc.NON_EXISTENT_NUMBER}})
 async def check_client_address(
         cache_repo: Annotated[RedisRepository, Depends(get_cache_repo)],
         phone: Annotated[str, AfterValidator(validate_phone)]
